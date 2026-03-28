@@ -24,6 +24,59 @@ HackArena 3.0 is a racing game competition where teams write AI bots (drivers) t
 
 5. **Run your bot** from IDE to connect to local server
 
+## Local Sandbox (Backend Lokalny)
+
+**⚠️ WAŻNE: Backend lokalny działa TYLKO na Windows!**
+
+Mechanizm sandboxów lokalnych pozwala testować boty bez limitów oficjalnego serwera:
+- Bez limitu liczby botów
+- Pełna swoboda testowania
+- Komunikacja z ha3-game w tle
+
+### Uruchamianie backend lokalny (Windows)
+
+```bash
+# 1. Upewnij się, że masz najnowszą wersję
+hackarena update backend
+
+# 2. Idź do katalogu backend
+cd backend
+
+# 3. Uruchom backend (plik wykonywalny)
+./ha3-backend-local    # Linux/macOS
+ha3-backend-local.exe  # Windows
+```
+
+### Tworzenie sandbox na stronie
+
+1. Zaloguj się na stronę HackArena
+2. Przejdź do zakładki "Local Servers"
+3. Kliknij "+" aby utworzyć nowy sandbox
+4. Twój backend powinien się pojawić na liście
+
+### Dołączanie do sandbox
+
+- **Jako spectator**: Przeglądarka → strona HackArena → "Join"
+- **Jako bot**: Uruchom wrapper → wybierz backend z listy
+
+### Workflow dla zespołu
+
+```
+┌─────────────────────────────────────────┐
+│  Członek z Windows                       │
+│  └─ Uruchamia backend lokalny            │
+│     └─ Tworzy sandbox na stronie         │
+│        └─ Inni dołączają botami         │
+└─────────────────────────────────────────┘
+          │
+    ┌─────┴─────┐
+    ▼           ▼
+┌───────┐   ┌───────┐
+│macOS  │   │ Linux │
+│bot    │   │ bot   │
+└───────┘   └───────┘
+```
+
 ## Linked Repositories
 
 | Repository | Language | Purpose |
@@ -47,7 +100,9 @@ hackarena auth whoami
 # Development
 hackarena status
 hackarena doctor
-hackarena update
+hackarena update              # Update all components
+hackarena update backend      # Update backend only
+hackarena update wrapper python  # Update Python wrapper
 hackarena clean
 
 # Submit
@@ -211,6 +266,8 @@ Three zones: Enter → Fix → Exit
 | TypeScript submit error | Add `user/package.json` to manifest |
 | Login required (exit 2) | Run `hackarena auth login` |
 | GitHub rate limit | Use own hotspot or authenticated requests |
+| No backend for aarch64-apple-darwin | Backend only on Windows - use teammate's backend |
+| No backend for linux | Check if Linux build available, otherwise use Windows |
 
 ## Pre-commit Checklist
 
