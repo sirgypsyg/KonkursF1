@@ -23,4 +23,4 @@ venv/
 # Build artifacts
 workspace/
 backend/
-wrappers/
+# wrappers/ - removed, we want to track our bot
