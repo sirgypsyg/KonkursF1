@@ -1,5 +1,5 @@
 {
   "edition": "3",
-  "wrapper_id": "python",
+  "wrapper_id": null,
   "backend_dir": "backend"
 }

@@ -1,0 +1,38 @@
+2026-03-28T13:24:03.972295Z  WARN ha3_backend_local: failed to load .env.local; falling back to .env error=path not found
+2026-03-28T13:24:03.972928Z DEBUG game_server::config: resolved APP_ENV app_env=Production
+2026-03-28T13:24:03.973897Z  INFO game_server::config: using local tracks cache directory path=\\?\C:\Desktop\hackathon\KonkursF1\backend\local\tracks-cache
+2026-03-28T13:24:03.974480Z DEBUG game_server::config: dir resolved path=\\?\C:\Desktop\hackathon\KonkursF1\backend\assets\bolids source="exe_dir"
+2026-03-28T13:24:03.974651Z  INFO game_server::config: using bolids directory path=\\?\C:\Desktop\hackathon\KonkursF1\backend\assets\bolids
+2026-03-28T13:24:03.974935Z  INFO game_server::config: server config simulation_hz=60
+2026-03-28T13:24:03.975080Z  INFO game_server: gRPC bind address: 0.0.0.0:50052
+2026-03-28T13:24:03.975467Z  INFO game_server::runtime::engine_worker: engine worker: startup runtime is idle
+2026-03-28T13:24:04.009260Z  INFO game_server::runtime::engine_worker: weather sync enabled (interval=60s)
+2026-03-28T13:24:05.510315Z  INFO game_server::local::broker: local broker registration established backend_id=389e3bc7-5578-440f-876d-6d00e325a05c heartbeat_interval_s=20 broker_endpoint=https://ha3-api.hackarena.pl/broker local_ipv4_endpoints=["172.20.10.9", "192.168.56.1", "172.27.32.1"] local_ipv6= local_port=50052
+2026-03-28T13:24:05.511147Z  INFO game_server: Starting gRPC server on 0.0.0.0:50052
+2026-03-28T13:24:05.521682Z  INFO game_server::server::grpc: local sandbox config store ready path=C:\Desktop\hackathon\KonkursF1\backend\local/sandbox-configs.json max_active_sandboxes=10
+2026-03-28T13:24:05.530428Z  INFO game_server::server::cors: CORS allow_origin: List(["https://ha3-game.hackarena.pl"])
+2026-03-28T13:24:05.530977Z  INFO game_server::server::grpc: Starting gRPC server (gRPC-web enabled) on 0.0.0.0:50052
+2026-03-28T13:28:25.445149Z  INFO game_server::services::asset: asset streaming started map_id=bolt01sadhfbsasdv kind=MinimapSvg
+2026-03-28T13:28:28.290130Z  INFO game_server::runtime::engine_worker: initializing engine world env=Production map_id=bolt01sadhfbsasdv track_path=\\?\C:\Desktop\hackathon\KonkursF1\backend\local\tracks-cache\bolt01sadhfbsasdv.glb
+2026-03-28T13:28:28.290586Z  INFO boink::native::version: Boink versions: c_api=1.0.0, engine=1.0.0, required=1.0.0
+2026-03-28T13:28:28.915346Z  INFO build: boink::native::version: Boink versions: c_api=1.0.0, engine=1.0.0, required=1.0.0
+2026-03-28T13:28:29.330881Z  INFO game_server::runtime::engine_worker: engine worker: sandbox upserted revision=1 sandbox_id=Some("0ee1cb8d-c198-583f-86c3-3f081d2b9717") activity_kind=Sandbox map_id=test active_sandboxes=1 sandbox_engines=1 time_of_day_preset=Noon pending_sandbox_activations=0
+2026-03-28T13:28:29.331091Z  INFO game_server::runtime::engine_worker: engine worker: sandbox loop started sandbox_id=0ee1cb8d-c198-583f-86c3-3f081d2b9717
+2026-03-28T13:33:41.066731Z  INFO game_server::auth::jwks: refreshed game-token jwks cache endpoint=https://ha3-api.hackarena.pl/gametoken keys=1
+2026-03-28T13:33:41.120032Z  INFO game_server::services::race_participant: participant bidi stream started stream_id=100000 self_public_car_id=1 self_engine_car_id=2 requested_hz=30 effective_hz=30 clamp_reason=None requested_view=Team resolved_view=Team view_downgrade_reason=None target=Sandbox { sandbox_id: "0ee1cb8d-c198-583f-86c3-3f081d2b9717" }
+2026-03-28T13:33:48.997377Z  INFO game_server::auth::jwks: refreshed game-token jwks cache endpoint=https://ha3-api.hackarena.pl/gametoken keys=1
+2026-03-28T13:33:48.998072Z  INFO game_server::services::race: frontend spectator stream started requested_hz=30 effective_hz=30 clamp_reason=None requested_view=Public resolved_view=Public view_downgrade_reason=None
+2026-03-28T13:33:50.680505Z  INFO game_server::services::asset: asset streaming started map_id=bolt01sadhfbsasdv kind=MainGlb
+2026-03-28T13:33:50.709074Z  INFO game_server::services::asset: asset streaming started map_id=bolt01sadhfbsasdv kind=MinimapSvg
+2026-03-28T13:33:50.724816Z  INFO game_server::services::asset: asset streaming started map_id=bolt01sadhfbsasdv kind=AnimationGlb
+2026-03-28T13:35:06.279660Z  INFO game_server::services::race_participant: participant cleanup: sandbox car removed public_car_id=1 engine_car_id=2 target=Sandbox { sandbox_id: "0ee1cb8d-c198-583f-86c3-3f081d2b9717" } reason="disconnect"
+2026-03-28T13:35:06.280096Z  INFO game_server::services::race_participant: participant bidi stream ended stream_id=100000 self_public_car_id=1 target=Sandbox { sandbox_id: "0ee1cb8d-c198-583f-86c3-3f081d2b9717" }
+2026-03-28T13:39:05.572253Z  WARN game_server::runtime::engine_worker: engine worker: sandbox tick exceeded budget sandbox_id=0ee1cb8d-c198-583f-86c3-3f081d2b9717 elapsed_ms="21.637" budget_ms="16.667"
+2026-03-28T13:44:45.459295Z  INFO game_server::services::asset: asset streaming started map_id=bolt01sadhfbsasdv kind=MinimapSvg
+2026-03-28T13:45:02.200109Z  INFO game_server::auth::jwks: refreshed game-token jwks cache endpoint=https://ha3-api.hackarena.pl/gametoken keys=1
+2026-03-28T13:45:02.200976Z  INFO game_server::services::race: frontend spectator stream started requested_hz=30 effective_hz=30 clamp_reason=None requested_view=Public resolved_view=Public view_downgrade_reason=None
+2026-03-28T13:45:03.007398Z  INFO game_server::services::asset: asset streaming started map_id=bolt01sadhfbsasdv kind=MainGlb
+2026-03-28T13:45:03.024200Z  INFO game_server::services::asset: asset streaming started map_id=bolt01sadhfbsasdv kind=MinimapSvg
+2026-03-28T13:45:03.056893Z  INFO game_server::services::asset: asset streaming started map_id=bolt01sadhfbsasdv kind=AnimationGlb
+2026-03-28T13:45:24.346764Z  INFO game_server::services::race: frontend cleanup: despawning owned cars reason="disconnect" car_count=0 owner_instance_uuid=None cleanup_target=Some(Sandbox { sandbox_id: "0ee1cb8d-c198-583f-86c3-3f081d2b9717" })
+2026-03-28T13:45:24.346914Z  INFO game_server::services::race: frontend spectator stream ended

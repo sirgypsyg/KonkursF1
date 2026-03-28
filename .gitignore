@@ -1,26 +1,14 @@
-# Binaries
-hackarena
-hackarena-cli-*.tar
-*.tar.gz
-*.zip
+# Zagnieżdżone repozytoria (osobne projekty)
+HackArena-Auth-Cli/
+HackArena-Cli/
+HackArena3.0-ApiWrapper-Python/
+HackArena3.0-Backend/
 
-# macOS
-.DS_Store
+# Plik systemowy Windows
+nul
 
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Python
+# Pliki tymczasowe / budowane
+*.exe
 __pycache__/
-*.py[cod]
-*$py.class
-.venv/
-venv/
-
-# Build artifacts
-workspace/
-backend/
-# wrappers/ - removed, we want to track our bot
+.vendor/
+.env
