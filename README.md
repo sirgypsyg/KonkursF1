@@ -2,6 +2,12 @@
 
 Repozytorium drużyny na konkurs HackArena 3.0.
 
+## ⚠️ Co NIE działa na macOS (ARM/M1/M2/M3)
+
+- **Backend lokalny** - organizatorzy nie wydali binarki dla macOS ARM
+- **Build ze źródła** - brakuje biblioteki `libboink.dylib`
+- **Rozwiązanie:** Użyj Windows u kolegi lub oficjalnych serwerów
+
 ## Status platform
 
 | Komponent | Windows | macOS (Intel) | macOS (ARM/M1/M2/M3) | Linux |
@@ -11,9 +17,89 @@ Repozytorium drużyny na konkurs HackArena 3.0.
 | Auth CLI | ✅ | ✅ | ✅ | ✅ |
 | Python wrapper | ✅ | ✅ | ✅ | ✅ |
 
-### ⚠️ Ważne
-- **Backend lokalny działa TYLKO na Windows**
-- macOS i Linux - łącz się z backendem kolegi (Windows) lub używaj oficjalnych serwerów
+---
+
+## 🪟 Instrukcja dla Windows (HOST serwera)
+
+**Jeden członek drużyny na Windows uruchamia backend lokalny:**
+
+### Krok 1: Pobierz CLI
+```powershell
+# Pobierz z:
+https://github.com/INIT-SGGW/HackArena-Cli/releases/tag/v0.1.0
+# Plik: hackarena-x86_64-pc-windows-msvc.exe
+```
+
+### Krok 2: Setup projektu
+```powershell
+# Sklonuj repo
+git clone https://github.com/sirgypsyg/KonkursF1.git
+cd KonkursF1
+
+# Setup
+hackarena.exe use 3
+hackarena.exe install
+hackarena.exe auth login
+```
+
+### Krok 3: Uruchom backend lokalny
+```powershell
+# Upewnij się, że masz najnowszą wersję
+hackarena.exe update backend
+
+# Wejdź do katalogu backend
+cd backend
+
+# Uruchom backend
+.\ha3-backend-local.exe
+```
+
+### Krok 4: Stwórz sandbox na stronie HackArena
+1. Zaloguj się na https://hackarena.pl (lub odpowiednia strona)
+2. Przejdź do zakładki **"Local Servers"**
+3. Kliknij **"+"** aby utworzyć nowy sandbox
+4. Twój backend powinien się pojawić automatycznie
+
+### Krok 5: Inni członkowie drużyny mogą się połączyć
+- macOS/Linux: Widzą Twój sandbox na stronie
+- Klikają "Join" lub uruchamiają bota z Twoim sandbox_id
+
+---
+
+## 🍎 Instrukcja dla macOS/Linux (CLIENT)
+
+**Nie możesz uruchomić backendu lokalnego - łączysz się z Windows:**
+
+### Krok 1: Setup
+```bash
+# Sklonuj repo
+git clone https://github.com/sirgypsyg/KonkursF1.git
+cd KonkursF1
+
+# Dodaj hackarena do PATH (opcjonalnie)
+echo 'export PATH="$PATH:$(pwd)"' >> ~/.zshrc
+source ~/.zshrc
+
+# Setup
+./hackarena use 3
+./hackarena auth login
+```
+
+### Krok 2: Zainstaluj zależności Python
+```bash
+pip install -e workspace/HackArena3.0-ApiWrapper-Python
+# lub
+pip install hackarena3
+```
+
+### Krok 3: Uruchom bota
+```bash
+cd wrappers/python/user/src
+python3 -m bot
+
+# Bot połączy się z dostępnym sandboxem
+# Upewnij się, że kolega z Windows ma uruchomiony backend
+```
 
 ---
 
