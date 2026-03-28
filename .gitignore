@@ -1,0 +1,26 @@
+# Binaries
+hackarena
+hackarena-cli-*.tar
+*.tar.gz
+*.zip
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Build artifacts
+workspace/
+backend/
+wrappers/
