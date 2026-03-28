@@ -2,111 +2,124 @@
 
 Repozytorium drużyny na konkurs HackArena 3.0.
 
-## Status
+## Status platform
 
 | Komponent | Windows | macOS (Intel) | macOS (ARM/M1/M2/M3) | Linux |
 |-----------|---------|---------------|---------------------|--------|
 | CLI | ✅ | ✅ | ✅ | ✅ |
-| Backend lokalny | ✅ | ❓ | ❌ | ✅ |
+| **Backend lokalny** | ✅ | ❌ | ❌ | ❓ |
 | Auth CLI | ✅ | ✅ | ✅ | ✅ |
 | Python wrapper | ✅ | ✅ | ✅ | ✅ |
 
-### Co działa:
-- CLI - konfiguracja i submit
-- Python wrapper - pisanie botów
-- Dokumentacja mechanik gry
-- Testowanie na serwerach zdalnych
-
-### Co NIE działa:
-- **Backend lokalny na macOS ARM** - organizatorzy nie wydali binarki dla `aarch64-apple-darwin`
-- Jedyne opcje dla macOS ARM: testować na serwerze kolegi (Windows/Linux) lub łączyć się z oficjalnymi serwerami
+### ⚠️ Ważne
+- **Backend lokalny działa TYLKO na Windows**
+- macOS i Linux - łącz się z backendem kolegi (Windows) lub używaj oficjalnych serwerów
 
 ---
 
-## Instalacja
+## Architektura
 
-### Wymagania
-- Python 3.10+ (dla bota w Pythonie)
-- GitHub account (do autoryzacji)
-
-### Pobierz CLI
-
-1. Pobierz z: https://github.com/INIT-SGGW/HackArena-Cli/releases/tag/v0.1.0
-   - **Windows**: `hackarena-x86_64-pc-windows-msvc.exe`
-   - **macOS ARM**: `hackarena-aarch64-apple-darwin` (lub skopiuj z tego repo)
-   - **Linux**: `hackarena-x86_64-unknown-linux-musl`
-
-2. Nadaj uprawnienia (Unix):
-   ```bash
-   chmod +x hackarena
-   ```
-
-### Setup
-
-```bash
-# W katalogu projektu
-./hackarena use 3
-./hackarena install          # Windows/Linux - instaluje backend lokalny
-./hackarena auth login       # Otwiera przeglądarkę do logowania
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Strona HackArena                      │
+│  (tworzenie sandboxów, spectating, dashboard)           │
+└─────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────┐
+│              Backend lokalny (Windows)                   │
+│  - Komunikuje się z ha3-game                             │
+│  - Bez limitu botów                                      │
+│  - Pełna swoboda testowania                              │
+└─────────────────────────────────────────────────────────┘
+                           │
+              ┌────────────┼────────────┐
+              ▼            ▼            ▼
+        ┌──────────┐ ┌──────────┐ ┌──────────┐
+        │ Bot (Ty) │ │ Bot (Kolega)│ │ Bot (...)│
+        │ Python   │ │ C++/C#/TS  │ │ Python   │
+        └──────────┘ └──────────┘ └──────────┘
 ```
 
 ---
 
-## Uruchamianie na Windows
+## Szybki start (Windows)
 
+### 1. Pobierz CLI
 ```powershell
-# 1. Pobierz CLI
-# https://github.com/INIT-SGGW/HackArena-Cli/releases
+# Z releases
+https://github.com/INIT-SGGW/HackArena-Cli/releases/tag/v0.1.0
+```
 
-# 2. Setup
+### 2. Setup projektu
+```powershell
 hackarena.exe use 3
 hackarena.exe install
 hackarena.exe auth login
+```
 
-# 3. Zainstaluj zależności Python
-cd wrappers/python/user
-pip install -r requirements.txt
+### 3. Uruchom backend lokalny
+```powershell
+# Upewnij się, że masz najnowszą wersję
+hackarena.exe update backend
 
-# 4. Utwórz lokalny serwer na stronie HackArena
-#    (zakładka "Local Servers")
+# Uruchom backend
+cd backend
+.\ha3-backend-local.exe   # lub inna nazwa pliku
+```
 
-# 5. Uruchom bota
+### 4. Stwórz sandbox na stronie
+1. Zaloguj się na stronę HackArena
+2. Kliknij "+" w zakładce "Local Servers"
+3. Twój backend powinien się pojawić
+
+### 5. Podłącz bota
+```powershell
+cd wrappers\python\user\src\bot
 python -m bot
+# Wybierz backend z listy
 ```
 
 ---
 
-## Uruchamianie na macOS ARM (M1/M2/M3)
+## Szybki start (macOS/Linux) - backend kolegi
 
-**⚠️ Backend lokalny NIE DZIAŁA - brak binarki dla ARM**
-
-### Opcja 1: Testowanie na serwerze kolegi (Windows/Linux)
-
-1. Kolega (Windows/Linux) uruchamia lokalny backend
-2. Ty piszesz bota lokalnie
-3. Łączysz się z jego serwerem przez stronę HackArena
-
-### Opcja 2: Oficjalne serwery
-
+### 1. Pobierz CLI
 ```bash
-# Ustaw zmienne środowiskowe (otrzymasz od organizatorów)
-export HA3_WRAPPER_BACKEND_ENDPOINT=https://server/backend
-export HA3_WRAPPER_TEAM_TOKEN=xxx
-export HA3_WRAPPER_AUTH_TOKEN=xxx
-
-# Uruchom bota
-python -m bot --official
+chmod +x hackarena
+./hackarena use 3
+./hackarena auth login
 ```
 
-### Instalacja Python wrapper
+### 2. Dołącz do backendu kolegi (Windows)
+- Kolega uruchamia backend lokalny (patrz wyżej)
+- Ty na stronie HackArena widzisz jego sandbox
+- Kliknij "Join" jako spectator lub bot
 
+### 3. Uruchom bota
 ```bash
-cd workspace/HackArena3.0-ApiWrapper-Python
-pip install -e .
-
-# Test importu
-python -c "from hackarena3 import run_bot; print('OK')"
+cd wrappers/python/user/src/bot
+python -m bot --sandbox_id <ID>
 ```
+
+---
+
+## Sandboxy lokalne - wyjaśnienie
+
+**Co to jest?**
+- Lokalny serwer gry na twojej maszynie
+- Pozwala testować bez limitów oficjalnego serwera
+- Możesz uruchomić wiele botów jednocześnie
+
+**Jak działa?**
+1. Uruchamiasz `backend/ha3-backend-local` na Windows
+2. Program komunikuje się z ha3-game w tle
+3. Na stronie pojawia się Twój sandbox
+4. Członkowie drużyny mogą się połączyć
+
+**Limitacje:**
+- Backend lokalny działa TYLKO na Windows
+- macOS/Linux - muszą łączyć się z backendem kogoś innego
 
 ---
 
@@ -121,11 +134,22 @@ KonkursF1/
 ├── Zasady Turnieju HackArena 3.0.* # Zasady (PL)
 ├── hackarena                     # CLI binary
 ├── .hackarena/                   # Konfiguracja projektu
-│   └──	project.json
+│   └── project.json
 └── workspace/                    # Kloned repos
     ├── HackArena-Cli/
     └── HackArena3.0-ApiWrapper-Python/
 ```
+
+---
+
+## Dostępne języki (wrappery)
+
+| Język | Status | Uwagi |
+|-------|--------|-------|
+| **Python** | ✅ Gotowy | `HackArena3.0-ApiWrapper-Python` |
+| **C++** | ✅ Dostępny | Wymaga cmake + MSVC na Windows |
+| **C#** | ✅ Dostępny | `dotnet run` |
+| **TypeScript** | ✅ Dostępny | `npm install && npm run` |
 
 ---
 
@@ -142,11 +166,10 @@ class MyBot:
     def on_tick(self, snapshot: RaceSnapshot, ctx: BotContext):
         self.tick += 1
         
-        # Prosta logika - jazda prosto
         ctx.set_controls(
-            throttle=0.6,
-            brake=0,
-            steer=0.0,
+            throttle=0.6,   # Gaz (0-1)
+            brake=0,        # Hamulec (0-1)
+            steer=0.0,      # Skręt (-1 do 1)
         )
 
 if __name__ == "__main__":
@@ -155,30 +178,26 @@ if __name__ == "__main__":
 
 ---
 
-## Przydatne komendy
+## Komendy CLI
 
 ```bash
-# CLI
-./hackarena status          # Status projektu
-./hackarena doctor          # Diagnostyka
-./hackarena auth whoami     # Kto jest zalogowany
-./hackarena submit --slot 1 # Submit rozwiązania
+# Setup
+./hackarena use 3
+./hackarena install
+./hackarena auth login
 
-# Python
-python -m bot               # Uruchom bota lokalnie
-python -m bot --official    # Uruchom na oficjalnych serwerach
+# Update
+./hackarena update backend      # Najnowszy backend
+./hackarena update wrapper python
+
+# Info
+./hackarena status              # Status projektu
+./hackarena doctor              # Diagnostyka
+./hackarena auth whoami         # Kto jest zalogowany
+
+# Submit
+./hackarena submit --slot 1
 ```
-
----
-
-## Linki
-
-- [HackArena-Cli](https://github.com/INIT-SGGW/HackArena-Cli)
-- [HackArena3.0-ApiWrapper-Python](https://github.com/INIT-SGGW/HackArena3.0-ApiWrapper-Python)
-- [HackArena-Auth-Cli](https://github.com/INIT-SGGW/HackArena-Auth-Cli)
-- [HackArena3.0-Backend](https://github.com/INIT-SGGW/HackArena3.0-Backend)
-- [Releases CLI](https://github.com/INIT-SGGW/HackArena-Cli/releases)
-- [Releases Backend](https://github.com/INIT-SGGW/HackArena3.0-Backend/releases)
 
 ---
 
@@ -187,7 +206,16 @@ python -m bot --official    # Uruchom na oficjalnych serwerach
 | Problem | Rozwiązanie |
 |---------|-------------|
 | `No project found` | `./hackarena use 3` |
-| `GitHub API 403/404` | Użyj własnego hotspotu lub GH_TOKEN |
-| `Permission denied (publickey)` | Użyj HTTPS zamiast SSH |
-| `No asset matching backend for aarch64-apple-darwin` | macOS ARM nie jest wspierany - użyj Windows/Linux lub serwer zdalny |
-| Login required (exit 2) | `./hackarena auth login` |
+| `GitHub API 403/404` | Użyj własnego hotspotu |
+| `No backend for aarch64-apple-darwin` | Normalne - tylko Windows ma backend |
+| Backend nie działa | Tylko Windows wspierany |
+| Nie widzę sandbox na stronie | Upewnij się że backend działa lokalnie |
+
+---
+
+## Linki
+
+- [HackArena-Cli](https://github.com/INIT-SGGW/HackArena-Cli)
+- [HackArena3.0-ApiWrapper-Python](https://github.com/INIT-SGGW/HackArena3.0-ApiWrapper-Python)
+- [Releases CLI](https://github.com/INIT-SGGW/HackArena-Cli/releases)
+- [Releases Backend](https://github.com/INIT-SGGW/HackArena3.0-Backend/releases)
